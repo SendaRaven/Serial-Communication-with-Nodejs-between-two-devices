@@ -1,0 +1,22 @@
+{
+  "name": "driver",
+  "version": "1.0.0",
+  "description": "driver for a virtual serial device",
+  "main": "driver.js",
+  "scripts": {
+    "start": "node -r dotenv/config driver.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rene Sahlmann",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "prompt": "^1.2.0",
+    "serialport": "^9.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.1"
+  }
+}
