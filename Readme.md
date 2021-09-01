@@ -2,7 +2,7 @@
 
 ## Example Serialport integration into two asynchronous node.js applications
 
-In this example I build 2 standalone node.js applications which communicate asynchronosly and ascii-based via serial ports.
+In this example I build 2 standalone node.js applications which communicate asynchronosly and ascii-based via serial ports. The scope of this example is very limited only to the show the two before mentioned main cases. Thats why it is only startup and immidiate excecution of the programs without user input. The time for completion was around 6 hours.
 
 ### Important Dependencies
 - npm intitialization (npm init)
