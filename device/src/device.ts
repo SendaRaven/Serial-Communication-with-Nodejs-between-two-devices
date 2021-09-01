@@ -1,12 +1,13 @@
-import Scale from '../device/src/scale.js';
+import Scale from './scale.js';
+import * as SerialPort from 'serialport';
 
-(function StartPrecissionScaleDEVICE() {
+(function StartPrecisionScale() {
 
     const port = process.env.DEVICE_PORT;
     if (!port) {
         throw new Error('no port in .env set');
     }
-    const options = {};
+    const options: SerialPort.OpenOptions = {};
 
     if (process.env.DEVICE_BAUDRATE) {
         options.baudRate = parseInt(process.env.DEVICE_BAUDRATE);
@@ -15,13 +16,13 @@ import Scale from '../device/src/scale.js';
     initializeScale(port, options);
 })();
 
-function initializeScale(port, options) {
-    const scale = new Scale(port, { ...options });
-    scale.attachListner('open', (data) => {
+function initializeScale(port: string, options: SerialPort.OpenOptions) {
+    const scale = new Scale(port, {...options});
+    scale.attachListener('open', () => {
         console.log('Device online');
         console.log('Listening.');
     });
-    scale.attachListner('data', (data) => {
+    scale.attachListener('data', (data: any) => {
         scale.parseCommand(data);
     });
 }

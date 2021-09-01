@@ -1,0 +1,41 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es2019",
+    "outDir": "dist_test",
+    "types": [
+      "node",
+      "reflect-metadata"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "declaration": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "allowJs": false,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "*": [
+        "src/typings/*"
+      ]
+    },
+    "skipLibCheck": true
+  },
+  "include": [
+    "test"
+  ],
+  "exclude": [
+    "node_modules",
+    "src_docs"
+  ]
+}

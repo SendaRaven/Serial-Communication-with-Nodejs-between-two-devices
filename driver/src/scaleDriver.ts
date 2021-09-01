@@ -1,44 +1,46 @@
-import SerialPort from 'serialport';
+import * as SerialPort from 'serialport';
 
 export default class ScaleDriver {
-    serialPort;
-    constructor(port, portOptions) {
+    private serialPort;
+    private port: string;
+    private portOptions: SerialPort.OpenOptions;
+
+    constructor(port: string, portOptions: SerialPort.OpenOptions) {
         this.port = port;
-        this.portOptions = portOptions
-        this.serialPort = new SerialPort(this.port, this.portOptions);
+        this.portOptions = portOptions;
+        this.serialPort = new SerialPort(this.port, portOptions);
     }
 
-    stableWeightValueworkflow() {
+    stableWeightValueWorkflow() {
 
         const message1 = 'S\n';
         const messageBuffer = Buffer.from(message1);
 
         this.serialPort.write(messageBuffer, async function (err) {
             if (err) {
-                this.reOpenPort()
-                this.stableWeightValueworkflow()
                 return console.log('Error on write: ', err.message);
             }
             return console.log('Send Command: Send stable weight value');
         });
     }
 
-    attachListner(string, callback) {
+    attachListener(eventType: string, callback: (data?: any) => void) {
 
-        this.serialPort.on(string, callback);
+        this.serialPort.on(eventType, callback);
     }
 
-    parseCommand(data) {
+    parseCommand(data: Buffer) {
 
         const key = data.toString('hex').substr(0, 8);
         switch (key) {
             // stable weight
-            case '53205320': console.log('Recieved: ', data.toString('hex'), ' is ', data.toString());
+            case '53205320':
+                console.log('Received: ', data.toString('hex'), ' is ', data.toString());
                 break;
-            // not excecutable
+            // not executable
             case '5320490a':
-                console.log('Command not excecutable.');
-                setTimeOut(() => this.stableWeightValueworkflow(), 3000);
+                console.log('Command not executable.');
+                setTimeout(() => this.stableWeightValueWorkflow(), 3000);
                 break;
             // overload
             case '53202B0a': console.log('Balance in overload range.');
@@ -57,7 +59,7 @@ export default class ScaleDriver {
 
         this.serialPort.open((err) => {
             if (err) {
-                return console.log('Error opening port: ', err.message)
+                return console.log('Error opening port: ', err.message);
             }
             return console.log('Port open');
         });
@@ -65,9 +67,9 @@ export default class ScaleDriver {
 
     closePort() {
 
-        this.serialPort.close(function (err) {
+        this.serialPort.close((err) => {
             if (err) {
-                return console.log('Error closinging port: ', err.message)
+                return console.log('Error closing port: ', err.message);
             }
         });
     }

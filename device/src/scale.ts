@@ -1,16 +1,19 @@
-import SerialPort from 'serialport';
+import * as SerialPort from 'serialport';
 
 export default class Scale {
-    serialPort;
-    constructor(port, portOptions) {
+    private serialPort;
+    private portOptions: SerialPort.OpenOptions;
+    private port: string;
+
+    constructor(port: string, portOptions: SerialPort.OpenOptions) {
         this.port = port;
         this.portOptions = portOptions;
         this.serialPort = new SerialPort(this.port, this.portOptions)
 
     }
 
-    attachListner(string, callback) {
-        this.serialPort.on(string, callback);
+    attachListener(eventType: string, callback: (data?: any) => void) {
+        this.serialPort.on(eventType, callback);
     }
 
     reOpenPort() {
@@ -25,7 +28,7 @@ export default class Scale {
     closePort() {
         this.serialPort.close(function (err) {
             if (err) {
-                return console.log('Error closinging port: ', err.message)
+                return console.log('Error closing port: ', err.message)
             }
         });
     }
@@ -39,8 +42,8 @@ export default class Scale {
     }
 
 
-    writeToPort(responseMessage) {
-        this.serialPort.write(new Buffer.from(responseMessage), function (err) {
+    writeToPort(responseMessage: string) {
+        this.serialPort.write(Buffer.from(responseMessage), function (err) {
             if (err) {
                 return console.log('Error on write: ', err.message);
             }
@@ -48,17 +51,20 @@ export default class Scale {
         });
     }
 
-    parseCommand(data) {
-        console.log('Recieved: ', data.toString('hex'), ' is ', data.toString());
+    parseCommand(data: Buffer) {
+        console.log('Received: ', data.toString('hex'), ' is ', data.toString());
 
         switch (data.toString('hex')) {
-            case '530a': this.getStableWeight();
+            case '530a':
+                this.getStableWeight();
                 break;
 
-            case '430a': this.closePort();
+            case '430a':
+                this.closePort();
                 break;
 
-            default: console.log('Listening.');
+            default:
+                console.log('Listening.');
                 break;
         }
 
