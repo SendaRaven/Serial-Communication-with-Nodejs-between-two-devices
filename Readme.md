@@ -8,7 +8,7 @@ In this example I build 2 standalone node.js applications which communicate asyn
 - npm intitialization (npm init)
 - [serialport](https://serialport.io/) npm package for serial communication in node.js (npm install serialport)
 - [com0com](https://sourceforge.net/projects/com0com) software to create virtual serialports for testing (create one paired virtual port for example on COM3 and COM4)
-- further dependencies dotenv for configuration and chai and mocha for testing
+- further dependencies dotenv for configuration
 
 ### Code Excecution
 1. Set your serial ports for every application in there respective .env file!
