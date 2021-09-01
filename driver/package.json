@@ -5,14 +5,13 @@
   "main": "driver.js",
   "scripts": {
     "start": "node -r dotenv/config driver.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r dotenv/config \"./tests/**/*.tests.js\" --colors --full-trace"
   },
   "author": "Rene Sahlmann",
   "license": "ISC",
   "type": "module",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "prompt": "^1.2.0",
     "serialport": "^9.2.0"
   },
   "devDependencies": {
